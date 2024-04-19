@@ -1,0 +1,61 @@
+services:
+  app:
+    build:
+      args:
+        user: krash
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: apiproducts
+    container_name: apiproducts-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    ports:
+      - 6001:6001
+    volumes:
+      - ./:/var/www
+    networks:
+      - apiproducts
+
+  db:
+    image: mysql:latest
+    container_name: apiproducts-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+    networks:
+      - apiproducts
+
+  nginx:
+    image: nginx:alpine
+    container_name: apiproducts-nginx
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d/
+    networks:
+      - apiproducts
+  dbadmin:
+    container_name: apiproducts-dbadminer
+    hostname: dbadmin
+    image: adminer
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    networks:
+      - apiproducts
+    restart: unless-stopped
+
+networks:
+  apiproducts:
+    driver: bridge
