@@ -56,10 +56,6 @@ class CustomAuthController extends Controller{
         if($currentToken){
             return $this->sendResponse('true', 'successful logout');
         }
-        //$user = Auth::user();
-        //$tokens = $user->tokens();
-        //$user->tokens()->delete();
-
     }
 
     //Utilidad

@@ -19,6 +19,6 @@ Route::controller(ProductController::class)->prefix('products')->group(function 
 
 Route::controller(CustomAuthController::class)->group(function () {
     Route::post('register', 'register');
-    Route::post('login', 'login')->name('login');
+    Route::post('login', 'login');
     Route::get('logout', 'logout')->middleware('auth:sanctum');
 });

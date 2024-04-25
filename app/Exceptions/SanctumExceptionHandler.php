@@ -3,7 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-
+use Exception;
 class SanctumExceptionHandler extends ExceptionHandler
 {
     public function render($request, Exception|\Throwable $exception)
