@@ -7,7 +7,7 @@ use App\Http\Requests\Api\Product\CreateProductRequest;
 use App\Services\ProductService;
 use HttpResponseException;
 use Illuminate\Http\Request;
-use mysql_xdevapi\Exception;
+use Exception;
 
 class ProductController extends Controller
 {

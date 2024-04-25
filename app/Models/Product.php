@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class Product extends Model
+class Product extends Model implements AuditableContract
 {
     use HasFactory;
+    use \OwenIt\Auditing\Auditable;
     protected $fillable = [
         'uuid',
         'name',
@@ -21,5 +23,4 @@ class Product extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
-
 }
